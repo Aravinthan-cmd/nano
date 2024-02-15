@@ -1,14 +1,13 @@
 import "../dashboard/dashboard.scss";
-import density from '../../assets/images/density.png';
+import density from '../../assets/images/density copy.png';
 import { useEffect, useState } from "react";
-import temperature from '../../assets/images/thermometer.png';
-import visco from '../../assets/images/water.png';
-import dtn from '../../assets/images/experiment.png';
+import temperature from '../../assets/images/thermometer copy.png';
+import visco from '../../assets/images/water copy.png';
+import dtn from '../../assets/images/lab.png';
 import { RadioButton, RadioGroup } from "react-radio-buttons";
 import ReactApexChart from 'react-apexcharts';
 
 const Dashboard = () => {
-
   const [data, setData] = useState([]);
   const [alldata, setAllData] = useState([]);
   const [sendData, setSendData] = useState([]);
@@ -136,7 +135,7 @@ const Dashboard = () => {
           </div>
           <div className="right">
             <h1>Density</h1>
-            <span>{data[0]?.density}</span>
+            <span>{data[0]?.density} kg/m3</span>
           </div>
         </div>
         <div className="viscosity box">
@@ -145,7 +144,7 @@ const Dashboard = () => {
           </div>
           <div className="right">
             <h1>Viscosity</h1>
-            <span>{data[0]?.viscosity}</span>
+            <span>{data[0]?.viscosity} cSt</span>
           </div>
         </div>
         <div className="temperature box">
@@ -154,7 +153,7 @@ const Dashboard = () => {
           </div>
           <div className="right">
             <h1>Temperature</h1>
-            <span>{data[0]?.temperature}</span>
+            <span>{data[0]?.temperature} °C</span>
           </div>
         </div>
         <div className="dtn box">
@@ -162,7 +161,7 @@ const Dashboard = () => {
             <img src={dtn} alt="" style={{ width: '80px' }} />
           </div>
           <div className="right">
-            <h1>Dtn</h1>
+            <h1>Tbn</h1>
             <span>{data[0]?.dtn}</span>
           </div>
         </div>
@@ -181,11 +180,11 @@ const Dashboard = () => {
               Temperature
             </RadioButton>
             <RadioButton value="Dtn" rootColor="#2196F3" pointColor="#2196F3">
-              Dtn
+              Tbn
             </RadioButton>
           </RadioGroup>
         </div>
-        <ReactApexChart options={chartOptions} series={chartOptions.series} type='line' height={465} />
+        <ReactApexChart options={chartOptions} series={chartOptions.series} type='line' height={550} />
       </div>
       
     </div>

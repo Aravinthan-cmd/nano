@@ -121,8 +121,8 @@ const Nano = () => {
     <div className="nano">
       <div className="box">
         <div className="select_value">
-          <label htmlFor="dropdown">Choose graphId:</label>
-          <select
+          <label htmlFor="dropdown">Select</label>
+          <select className="value"
             id="dropdown"
             onChange={handleOptionChange}
             value={selectedOption || ""}
@@ -134,10 +134,9 @@ const Nano = () => {
             ))}
           </select>
         </div>
-
         <div className="time">
           <div className="start">
-            <label>TimestampFrom</label>
+            <label>TimeFrom</label>
             <input
               type="date"
               id="timeFrom"
@@ -146,7 +145,7 @@ const Nano = () => {
             />
           </div>
           <div className="end">
-            <label>TimestampTo</label>
+            <label>TimeTo</label>
             <input
               type="date"
               id="timeTo"
@@ -155,6 +154,14 @@ const Nano = () => {
             />
           </div>
         </div>
+        <div className="last_value">
+          <span>Last Value</span>
+          <p>{chartData[0]}</p>
+        </div>
+        <div className="last">
+          <span>Last Time</span>
+          <p>{time[0]}</p>
+        </div>
       </div>
 
       <div className="graph">
@@ -162,7 +169,7 @@ const Nano = () => {
           options={chartOptions1}
           series={chartOptions1.series}
           type="line"
-          height={570}
+          height={770}
         />
       </div>
     </div>
