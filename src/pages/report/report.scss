@@ -33,7 +33,7 @@
         height: 800px;
         gap: 30px;
 
-        .name{
+        .name {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -49,14 +49,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 50px;
+            gap: 30px;
             width: 100%;
             height: 600px;
             background-color: #393E46;
 
+            .input {
+                color: #000;
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+            }
             .xl_btn {
                 width: 200px;
-                height: 80px;
+                height: 40px;
                 background-color: rgb(65, 105, 153);
                 display: flex;
                 align-items: center;
@@ -69,7 +75,7 @@
             }
         }
     }
-
+    
     .nano {
         display: flex;
         flex-direction: column;
@@ -93,14 +99,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 50px;
+            gap: 30px;
             width: 100%;
             height: 600px;
             background-color: #393E46;
 
+            .input {
+                color: #000;
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+            }
             .xl_btn {
                 width: 200px;
-                height: 80px;
+                height: 40px;
                 background-color: rgb(65, 105, 153);
                 display: flex;
                 align-items: center;

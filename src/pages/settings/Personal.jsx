@@ -1,6 +1,6 @@
 import React from 'react';
 import '../settings/personal.scss';
-import logo from '../../assets/images/xyma.png';
+import logo from '../../assets/images/xyma_logo.png';
 
 
 const Personal = () => {
@@ -13,7 +13,7 @@ const Personal = () => {
         <div className="body-personal">
             <div className="top">
                 <div className="name"><h4>Name</h4>
-                    <input type='text' disabled value='Aravinthan'/>
+                    <input type='text' disabled value='xyma'/>
                 </div>
                 <div className="email"><h4>Email</h4>
                 <input type='text' disabled value='aravinth@xyma.in'/>
@@ -26,7 +26,7 @@ const Personal = () => {
                 </div>
                 <div className="contact">
                     <h5>Contact_No</h5>
-                    <input type='text' disabled value='9876543210'/>
+                    <input type='text' disabled value='9684572145'/>
                 </div>
             </div>
         </div>

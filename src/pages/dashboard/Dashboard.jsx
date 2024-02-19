@@ -62,7 +62,7 @@ const Dashboard = () => {
     time[i] = alldata[i]?.updatedAt;
   }
 
-  console.log("sensorData",sendData)
+  console.log("sensorData",sendData);
 
   const chartOptions = {
     grid: {
@@ -74,7 +74,7 @@ const Dashboard = () => {
         data: sendData,
         stroke: {
           curve: 'smooth',
-          dashArray: [5, 5], // Set the dash pattern (e.g., 5 units of line, 5 units of gap)
+          dashArray: [5, 5], // Set the dash pattern
         },
       },
     ],

@@ -6,63 +6,133 @@ import * as XLSX from "xlsx";
 
 const Report = () => {
   const [data, setData] = useState([]);
+  const [nanoData, setNanoData] = useState([]);
+  const [selectXyma, setSelectXyma] = useState();
+  const [selectNano, setSelectNano] = useState('temperature');
 
   useEffect(() => {
     const interval = setInterval(() => {
       fetchAllData();
+      fetchNanoData(selectNano);
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  },[selectNano]);
 
   const fetchAllData = async () => {
-    var url;
+    var urlxyma;
     try {
-      url = "http://localhost:4000/sensor/getallSensor";
-      console.log("url", url);
-      const response = await fetch(url);
+      urlxyma = "http://localhost:4000/sensor/getallSensor";
+      console.log("urlxyma", urlxyma);
+      const response = await fetch(urlxyma);
       const dataVal = await response.json();
       setData(dataVal);
     } catch (error) {
       console.log("error", error);
     }
   };
+  const fetchNanoData = async () => {
+    var url;
+    try {
+        url = `http://localhost:4000/sensor/getNanoGraph?graphName=${selectNano}`;
+      console.log("url", url);
+      const response = await fetch(url);
+      const dataVal = await response.json();
+      setNanoData(dataVal);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
-  console.log(data);
   var density = [];
   var temperature = [];
   var viscosity = [];
-  var dtn = [];
-
+  var tbn = [];
+  var timexyma = [];
   for (let index = 0; index < data.length; index++) {
     density[index] = data[index].density;
     temperature[index] = data[index].temperature;
     viscosity[index] = data[index].viscosity;
-    dtn[index] = data[index].dtn;
+    tbn[index] = data[index].dtn;
+    timexyma[index] = data[index].updatedAt;
   }
-  console.log(density);
-
-//   const values = [density, viscosity, temperature, dtn];
-//     const head = ["density", "viscosity", "temperature", "dtn"];
 
     const handleDownload = () => {
-        const values = [density, viscosity, temperature, dtn];
-        const head = ["density", "viscosity", "temperature", "dtn"];
-      
-        // Combine headers with data
-        const sheetData = values.reduce((acc, col, index) => {
-          col.unshift(head[index]); // Add the header to the beginning of each column
-          return acc.concat(col.map((value) => [value])); // Combine each column with data
-        }, []);
-      
-        const worksheet = XLSX.utils.aoa_to_sheet(sheetData);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
-        XLSX.writeFile(workbook, "3lions.xlsx");
-      };
-      
-
+      let selectedArray = [];
+      let selectedName;
+      switch (selectXyma) {
+        case 'density':
+          selectedName = 'density';
+          selectedArray = density;
+          break;
+        case 'viscosity':
+          selectedName = 'viscosity';
+          selectedArray = viscosity;
+          break;
+        case 'temperature':
+          selectedName = 'temperature';
+          selectedArray = temperature;
+          break;
+        case 'dtn':
+          selectedName = 'Tbn';
+          selectedArray = tbn;
+          break;
+        default:
+          selectedName = 'density';
+          selectedArray = density;
+          break;
+      }
+      console.log("excel",selectedName)
+      const data = [[selectedName, 'timestamp'], ...selectedArray.map(value => [value,timexyma])];
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+      XLSX.writeFile(workbook, `excel_data_${selectedName}.xlsx`);
+    };  
+    
+    const handleDownloadNano = () => {
+      // console.log('NanoSelect', selectNano);
+      const val = nanoData[0]?.data;
+      const time = nanoData[0]?.timestamp;
+      const data = [[`${selectNano}`,'timestamp'], ...val.map(value => [value, time])];
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+      XLSX.writeFile(workbook, "3Lions.xlsx");
+    };
+//nano
+    const options = ["temperature", "battery", "sound-rms", "humidity", "flux-rms", "speed"];
+    const handleOptionChange = (event) => {
+      let value = event.target.value;
+      // console.log('value', value);
+      setSelectNano(value);
+    };
+//xyma
+    const optionxyma = ["Density", "Viscosity", "Temperature","Tbn"];
+    const handleOptionChangexyma = (event) => {
+      let value = event.target.value;
+      console.log("val",value);
+      switch (value) {
+        case 'Density':
+          setSelectXyma('density');
+          break;
+        case 'Viscosity':
+          setSelectXyma('viscosity');
+          break;
+        case 'Temperature':
+          setSelectXyma('temperature');
+          break;
+        case 'Tbn':
+          setSelectXyma('dtn');
+          break;
+        default:
+          setSelectXyma('viscosity');
+          // setForceRerend
+          break;
+      }
+    };
+    console.log("xyma", selectXyma);
 
   return (
     <div className="report">
@@ -74,7 +144,7 @@ const Report = () => {
       <div className="body">
         <div className="xyma">
           <div className="name">
-            <h1>Xyma Sensors</h1>
+            <h1>Xyma Sensor</h1>
           </div>
           <div className="bottom">
             <div className="logo">
@@ -84,6 +154,20 @@ const Report = () => {
                 style={{ width: "400px", height: "400px" }}
               />
             </div>
+            <div className="input">
+          <label htmlFor="xymadropdown">Select</label>
+          <select className="xymavalue"
+            id="xymadropdown"
+            onChange={handleOptionChangexyma}
+            value={selectXyma || ""}
+          >
+            {optionxyma.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          </div>
             <div
               className="xl_btn"
               onClick={() => {
@@ -106,7 +190,24 @@ const Report = () => {
                 style={{ width: "400px", height: "400px" }}
               />
             </div>
-            <div className="xl_btn">
+            <div className="input">
+          <label htmlFor="nanodropdown">Select</label>
+          <select className="value"
+            id="nanodropdown"
+            onChange={handleOptionChange}
+            value={selectNano || ""}
+          >
+            {options.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          </div>
+            <div className="xl_btn" 
+            onClick={() => {
+              handleDownloadNano();
+            }}>
               <span>Download</span>
             </div>
           </div>
