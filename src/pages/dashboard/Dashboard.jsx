@@ -100,6 +100,26 @@ const Dashboard = () => {
         },
       },
     },
+    tooltip: {
+      theme: "dark", // Set the theme to dark
+      style: {
+        background: "#000000", // Set the background color to black
+        color: "#ffffff", // Set the text color to white
+      },
+      y: {
+        title: {
+          formatter: function(seriesName) {
+            return 'Value: ';
+          },
+        },
+        formatter: function(value) {
+          return value;
+        },
+      },
+      marker: {
+        show: true,
+      },
+    },
   };
 
   console.log('data', data)
