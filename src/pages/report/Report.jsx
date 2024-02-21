@@ -7,7 +7,7 @@ import * as XLSX from "xlsx";
 const Report = () => {
   const [data, setData] = useState([]);
   const [nanoData, setNanoData] = useState([]);
-  const [selectXyma, setSelectXyma] = useState();
+  const [selectXyma, setSelectXyma] = useState('density');
   const [selectNano, setSelectNano] = useState('temperature');
 
   useEffect(() => {
@@ -128,7 +128,6 @@ const Report = () => {
           break;
         default:
           setSelectXyma('viscosity');
-          // setForceRerend
           break;
       }
     };
@@ -155,7 +154,7 @@ const Report = () => {
               />
             </div>
             <div className="input">
-          <label htmlFor="xymadropdown">Select</label>
+          <label className="text-white" htmlFor="xymadropdown">Select</label>
           <select className="xymavalue"
             id="xymadropdown"
             onChange={handleOptionChangexyma}
@@ -191,7 +190,7 @@ const Report = () => {
               />
             </div>
             <div className="input">
-          <label htmlFor="nanodropdown">Select</label>
+          <label className="text-white" htmlFor="nanodropdown">Select</label>
           <select className="value"
             id="nanodropdown"
             onChange={handleOptionChange}

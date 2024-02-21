@@ -16,7 +16,7 @@ const Personal = () => {
                     <input type='text' disabled value='xyma'/>
                 </div>
                 <div className="email"><h4>Email</h4>
-                <input type='text' disabled value='aravinth@xyma.in'/>
+                <input type='text' disabled value='info@xyma.in'/>
                 </div>
             </div>
             <div className="bottom">
@@ -26,7 +26,7 @@ const Personal = () => {
                 </div>
                 <div className="contact">
                     <h5>Contact_No</h5>
-                    <input type='text' disabled value='9684572145'/>
+                    <input type='text' disabled value='+91-9442949347'/>
                 </div>
             </div>
         </div>
