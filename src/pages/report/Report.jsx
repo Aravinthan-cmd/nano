@@ -8,13 +8,13 @@ const Report = () => {
   const [data, setData] = useState([]);
   const [nanoData, setNanoData] = useState([]);
   const [selectXyma, setSelectXyma] = useState('density');
-  const [selectNano, setSelectNano] = useState('temperature');
+  const [selectNano, setSelectNano] = useState('temperaure');
 
   useEffect(() => {
     const interval = setInterval(() => {
       fetchAllData();
       fetchNanoData(selectNano);
-    }, 2000);
+    }, 1000);
     return () => {
       clearInterval(interval);
     };
@@ -83,7 +83,7 @@ const Report = () => {
           selectedArray = density;
           break;
       }
-      console.log("excel",selectedName)
+      console.log("excel",selectedName);
       const data = [[selectedName, 'timestamp'], ...selectedArray.map(value => [value,timexyma])];
       const worksheet = XLSX.utils.aoa_to_sheet(data);
       const workbook = XLSX.utils.book_new();
@@ -91,16 +91,28 @@ const Report = () => {
       XLSX.writeFile(workbook, `excel_data_${selectedName}.xlsx`);
     };  
     
+    // const handleDownloadNano = () => {
+    //   // console.log('NanoSelect', selectNano);
+    //   let val = nanoData[0]?.data;
+    //   let time = nanoData[0]?.timestamp;
+    //   const data = [[`${selectNano}`,'timestamp'], ...val.map((value, index)=> [value, time[index]])];
+    //   const worksheet = XLSX.utils.aoa_to_sheet(data);
+    //   const workbook = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+    //   XLSX.writeFile(workbook, "3Lions.xlsx");
+    // };
     const handleDownloadNano = () => {
-      // console.log('NanoSelect', selectNano);
-      const val = nanoData[0]?.data;
-      const time = nanoData[0]?.timestamp;
-      const data = [[`${selectNano}`,'timestamp'], ...val.map(value => [value, time])];
-      const worksheet = XLSX.utils.aoa_to_sheet(data);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
-      XLSX.writeFile(workbook, "3Lions.xlsx");
+      setTimeout(() => {
+        let val = nanoData[0]?.data;
+        let time = nanoData[0]?.timestamp;
+        const data = [[`${selectNano}`, 'timestamp'], ...val.map((value, index) => [value, time[index]])];
+        const worksheet = XLSX.utils.aoa_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+        XLSX.writeFile(workbook, "3Lions.xlsx");
+      }, 2000);
     };
+    
 //nano
     const options = ["temperature", "battery", "sound-rms", "humidity", "flux-rms", "speed"];
     const handleOptionChange = (event) => {
