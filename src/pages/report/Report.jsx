@@ -102,26 +102,42 @@ const Report = () => {
     //   XLSX.writeFile(workbook, "3Lions.xlsx");
     // };
     const handleDownloadNano = () => {
-      setTimeout(() => {
-        let val = nanoData[0]?.data;
-        let time = nanoData[0]?.timestamp;
-        const data = [[`${selectNano}`, 'timestamp'], ...val.map((value, index) => [value, time[index]])];
-        const worksheet = XLSX.utils.aoa_to_sheet(data);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
-        XLSX.writeFile(workbook, "3Lions.xlsx");
-      }, 2000);
-    };
+  setTimeout(() => {
+    const val = nanoData[0]?.data;
+    const timestamps = nanoData[0]?.timestamp;
+
+    if (!val || !timestamps) {
+      console.error('Invalid nanoData');
+      return;
+    }
+
+    // Convert epoch timestamps to formatted date strings
+    const formattedTimestamps = timestamps.map((epochTimestamp) => {
+      const date = new Date(epochTimestamp * 1000);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    });
+
+    const data = [[`${selectNano}`, 'timestamp'], ...val.map((value, index) => [value, formattedTimestamps[index]])];
+    const worksheet = XLSX.utils.aoa_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
+    XLSX.writeFile(workbook, "3Lions.xlsx");
+  }, 2000);
+};
     
 //nano
     const options = ["temperature", "battery", "sound-rms", "humidity", "flux-rms", "speed"];
     const handleOptionChange = (event) => {
       let value = event.target.value;
-      // console.log('value', value);
       setSelectNano(value);
     };
 //xyma
-    const optionxyma = ["Density", "Viscosity", "Temperature","Tbn"];
+    const optionxyma = ["Density", "Viscosity", "Temperature","TDN"];
     const handleOptionChangexyma = (event) => {
       let value = event.target.value;
       console.log("val",value);
@@ -135,7 +151,7 @@ const Report = () => {
         case 'Temperature':
           setSelectXyma('temperature');
           break;
-        case 'Tbn':
+        case 'TDN':
           setSelectXyma('dtn');
           break;
         default:

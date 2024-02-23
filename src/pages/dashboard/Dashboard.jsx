@@ -155,7 +155,7 @@ const Dashboard = () => {
           </div>
           <div className="right">
             <h1>Density</h1>
-            <span>{data[0]?.density} kg/m3</span>
+            <span>{data[0]?.density} kg/m³</span>
           </div>
         </div>
         <div className="viscosity box">
@@ -181,7 +181,7 @@ const Dashboard = () => {
             <img src={dtn} alt="" style={{ width: '80px' }} />
           </div>
           <div className="right">
-            <h1>Tbn</h1>
+            <h1>TDN</h1>
             <span>{data[0]?.dtn}</span>
           </div>
         </div>
@@ -200,7 +200,7 @@ const Dashboard = () => {
               Temperature
             </RadioButton>
             <RadioButton value="Dtn" rootColor="#2196F3" pointColor="#2196F3">
-              Tbn
+              TDN
             </RadioButton>
           </RadioGroup>
         </div>
